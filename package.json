@@ -10,7 +10,8 @@
     "irc": "git://github.com/martynsmith/node-irc.git",
     "sugar": "*",
     "optimist": "*",
-    "async": "*"
+    "async": "*",
+    "coffee-script": "*"
   },
   "repository": "",
   "author": "Ben Buckman",

@@ -1,3 +1,5 @@
+#!/usr/bin/env coffee
+
 ###
 History bot for Martini IRC
 - remember when a user logs out
@@ -15,6 +17,7 @@ argv = require('optimist')
   .demand('server').alias('server', 's').describe('server', 'Server')
   .demand('channel').alias('channel', 'c').describe('channel', 'Channel')
   .demand('botname').alias('botname', 'b').describe('botname', 'Bot Name')
+  .demand('port').alias('port', 'p').describe('port', 'Port number').default('port', '6667')
   .alias('user', 'u').describe('user', 'Username for server')
   .alias('password', 'p').describe('password', 'Password for server')
   .boolean('ssl').describe('ssl', 'Use SSL').default('ssl', false)
@@ -32,6 +35,7 @@ bot = new irc.Client server, botName,
   channels: [ channel ]
   autoConnect: false
   secure: argv.ssl
+  port: argv.port
   userName: argv.u
   password: argv.p
   selfSigned: true
@@ -89,7 +93,7 @@ bot.on 'message' + channel, (who, message)->
 
   # save everything else
   d = Date.create()
-  msgs[++msgCount] = d.format('{M}/{d}/{yy}') + ' ' + d.format('{12hr}:{mm}{tt}') + " #{who}: #{message}"
+  msgs[++msgCount] = d.format('{yyyy}-{MM}-{d}') + ' ' + d.format('{hh}:{mm}:{ss}') + " <#{who}> #{message}"
 
   # cleanup
   if msgCount - msgMin >= keepOnly
